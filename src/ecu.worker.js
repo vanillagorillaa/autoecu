@@ -112,8 +112,18 @@ class EcuWorker {
     await this._connectWebWorker(serialNumber)
     if (this.rwd && this.rwd.canAddress) {
       console.log(`0x${this.rwd.canAddress.toString(16)}`)
-      var bus = await this.panda.hasObd() ? 1 : 0
-      await this.client.init(this.rwd.canAddress, undefined, bus)
+      this.clients = []   // keep track of multiple UdsClient instances
+
+      for (let bus of [0, 1, 2]) {
+        let client = new UdsClient(this.panda, 10, true) // enable debug if you want
+        try {
+          await client.init(this.rwd.canAddress, undefined, bus)
+          console.log(`Connected on bus ${bus}`)
+          this.clients.push(client)
+        } catch (err) {
+          console.warn(`No ECU response on bus ${bus}: ${err}`)
+        }
+      }
     }
     else {
       console.log('missing CAN address!')
@@ -196,7 +206,7 @@ class EcuWorker {
     await this.client.write_data_by_identifier(0xF101, this.rwd.firmware.decryptionKey)
 
     console.log('request download ...')
-    postMessage({ command: 'flash-status', result: 'flash firmware ...' })    
+    postMessage({ command: 'flash-status', result: 'flash firmware ...' })
     console.log(`-start addr: 0x${this.rwd.firmware.start.toString(16)}`)
     console.log(`-data length: 0x${this.rwd.firmware.size.toString(16)}`)
     var block_size = await this.client.request_download(this.rwd.firmware.start, this.rwd.firmware.size)

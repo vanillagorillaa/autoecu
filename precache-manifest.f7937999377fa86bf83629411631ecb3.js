@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "e5438474e75996c92faa",
+    "revision": "0b7790a76d5c0cf35e81",
     "url": "/autoecu/static/css/main.f39dfb5d.chunk.css"
   },
   {
-    "revision": "e5438474e75996c92faa",
-    "url": "/autoecu/static/js/main.e5438474.chunk.js"
+    "revision": "0b7790a76d5c0cf35e81",
+    "url": "/autoecu/static/js/main.0b7790a7.chunk.js"
   },
   {
     "revision": "796b8347d9a9eaaeb9fb",
@@ -16,11 +16,11 @@ self.__precacheManifest = [
     "url": "/autoecu/static/js/runtime~main.99df6ae3.js"
   },
   {
-    "revision": "fbb311e86ab2ca869537ab9aba179175",
-    "url": "/autoecu/d878374d13965b8f1aab.worker.js"
+    "revision": "96d5c58360de46be567e32729f0ee8df",
+    "url": "/autoecu/367330c33ecbd80cf507.worker.js"
   },
   {
-    "revision": "46a26a96156f880c5cb14527394d0b33",
+    "revision": "c1c22c8a56d2947a133941e78c79b582",
     "url": "/autoecu/index.html"
   }
 ];

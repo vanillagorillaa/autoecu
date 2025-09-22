@@ -112,8 +112,18 @@ class EcuWorker {
     await this._connectWebWorker(serialNumber)
     if (this.rwd && this.rwd.canAddress) {
       console.log(`0x${this.rwd.canAddress.toString(16)}`)
-      var bus = await this.panda.hasObd() ? 1 : 2
-      await this.client.init(this.rwd.canAddress, undefined, bus)
+      this.clients = []
+
+      for (let bus of [0, 1, 2]) {
+        let client = new UdsClient(this.panda, 10, false)
+        try {
+          await client.init(this.rwd.canAddress, undefined, bus)
+          console.log(`Connected on bus ${bus}`)
+          this.clients.push(client)
+        } catch (err) {
+          console.warn(`No ECU response on bus ${bus}: ${err}`)
+        }
+      }
     }
     else {
       console.log('missing CAN address!')

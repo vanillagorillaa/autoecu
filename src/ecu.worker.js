@@ -112,7 +112,7 @@ class EcuWorker {
     await this._connectWebWorker(serialNumber)
     if (this.rwd && this.rwd.canAddress) {
       console.log(`0x${this.rwd.canAddress.toString(16)}`)
-      var bus = await this.panda.hasObd() ? 2 : 0
+      var bus = await this.panda.hasObd() ? 1 : 2
       await this.client.init(this.rwd.canAddress, undefined, bus)
     }
     else {
